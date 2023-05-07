@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Product {% endblock %}
+
+<!-- Подключили CSS из папки static -->
+<!--<link href="{% static 'css/main.css' %}" rel="stylesheet">-->
+
+{% block body %}
+
+	<div class="container">
+        <div class="row justify-content-md-center">
+            <div class ="row col-lg-12">
+					<div class="col-lg-4">
+						<div class="align-self-stretch">
+						<img class="thumbnail" src="/images/{{ product.image }}">
+						</div>
+						</div>
+<!--				---------------------------------------------------------------------->
+					<div style="padding:50px" class="col-lg-5">
+						<div class="col">
+						  <div class="align-self-stretch"><h3>{{product.name}}</h3></div>
+						</div>
+						<hr>
+						<div class="col-lg-5 justify-content-start">
+						  <div class="p-2">
+							<!-- --- ВСТАВКА ФОРМЫ --- -->
+							<form method="POST" action="{% url 'cart:cart_add' product.id %}">
+							<div class="row mb-2">
+							{% csrf_token %}
+							<table>{{ cart_product_form }}</table>
+							<input type="submit" class="btn btn-outline-dark" value="В корзину">
+							</div>
+
+
+
+							</form>
+						  </div>
+						</div>
+						<div class="col">
+						  <div class="p-1"><h3>${{product.price}}</h3></div>
+						</div>
+
+						</div>
+<!--				---------------------------------------------------------------------->
+				</div>
+			</div>
+		</div>
+
+{% endblock body %}

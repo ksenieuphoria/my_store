@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Checkout {% endblock %}
+
+
+
+{% block body %}
+
+    <div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="box-element" id="form-wrapper">
+					<br>
+					<h3>Оформление заказа</h3>
+					<br>
+<!--					<div class="col-sm-8">-->
+					<!-- --- ВСТАВКА ФОРМЫ (СЛОЖНЫМ) --- -->
+                	<!-- В "action" вставляем маршрут по которому будет обрабатываться эта форма -->
+					<form class="order-form" method="post" action="{% url 'orders:order_created' %}">
+						{% csrf_token %}
+						{{ form.as_p }}
+						<div class="d-grid gap-2 col-4 mx-auto">
+						<p><input type="submit" class="form-control btn btn-outline-dark" value="Заказать"></p>
+						</div>
+					</form>
+<!--						</div>-->
+				</div>
+			</div>
+
+        <div class="box-element hidden" id="payment-info"><small>Paypal Options</small></div>
+        <div class="col-lg-6">
+            <div class="box-element">
+				<a class="btn btn-outline-dark" href="{% url 'cart:cart_detail' %}">&#x2190; Вернуться к корзине</a>
+				<hr>
+				<h3>Итого: </h3>
+				<hr>
+				{% for item in cart %}
+<!--				<li>-->
+<!--					{{ item.quantity }} x {{ item.product.name }}-->
+<!--					<span>${{ item.total_price }}</span>-->
+<!--				</li>-->
+				<div class="cart-row">
+					<div style="flex:2"><img class="row-image" src="/images/{{ item.product.image }}"></div>
+					<div style="flex:2"><p>{{ item.product.name }}</p></div>
+					<div style="flex:1"><p>x {{ item.quantity }}</p></div>
+					<div style="flex:1"><p>${{ item.total_price|floatformat:2 }}</p></div>
+				</div>
+				{% endfor %}
+				<br>
+				<h5>Итого: ${{ cart.get_total_price }}</h5>
+			</div>
+        </div>
+    </div>
+    </div>
+
+{% endblock body %}
