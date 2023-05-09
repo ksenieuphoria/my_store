@@ -11,5 +11,7 @@ urlpatterns = [
     path('store', views.store, name='store'),
     # Маршрут "Детали продукта"
     path('product/<int:product_id>', views.product_detail, name='product_detail'),
+    # Маршрут "О компании"
+    path('about', views.about, name='about'),
 
 ]

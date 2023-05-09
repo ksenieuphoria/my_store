@@ -8,7 +8,7 @@
 
 {% block body %}
 
-{% if form %}
+<!--{% if form %}-->
 <br>
 
     <div class="container">
@@ -31,14 +31,14 @@
                 {% for product in products %}
                     <div class="col-sm-3">
                         <div class="align-self-stretch" >
-                        <a href="/product/{{ product.id }}"><img class="thumbnail" src="/images/{{ product.image }}"></a>
+                        <a href="{% url 'store:product_detail' product.id %}"><img class="thumbnail" src="/images/{{ product.image }}"></a>
                             <div class = "box-element product">
                                 <div class="col" style="height: 50px;">
                                 <h6><strong>{{ product.name }}</strong></h6>
                                 </div>
                                 <hr>
-                                <div class="row">
-                                <div class="col-6">
+                                <div class="row d-flex align-items-center">
+                                <div class="col-6 d-flex justify-content-start">
                                 <!-- --- ДОБАВИТЬ ПРОДУКТ В КОРЗИНУ С ГЛАВНОЙ СТРАНИЦЫ --- -->
                                 <!-- --- ВСТАВКА ФОРМЫ --- -->
                                 <form method="POST" action="{% url 'cart:cart_add' product.id %}">
@@ -46,54 +46,38 @@
                                 {{ form_cart }}
                                 <input type="submit" class="btn btn-outline-dark" value="В корзину">
                                 </form>
-                                <!-- --- ВСТАВКА ФОРМЫ --- -->
+                                <!-- ------------------------->
                                 </div>
-                                <div class="col-6">
-                                <h4 style="display: inline-block; float: right">${{ product.price|floatformat:2 }}</h4>
+                                <div class="col-6 d-flex justify-content-end">
+                                <h4>${{ product.price|floatformat:2 }}</h4>
                                 </div>
                                 </div>
                             </div>
                         </div>
-<!--                        </div>-->
                     </div>
                 {% endfor %}
                 </div>
+            <br>
+
+                <nav aria-label="label">
+                  <ul class="pagination pagination-sm justify-content-center">
+                      {% if page_obj.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link text-dark" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                    </li>
+                      {% endif %}
+                    <li class="page-item"><a class="page-link text-dark" href="#">{{ page_obj.number }}</a></li>
+                      {% if page_obj.has_next %}
+                    <li class="page-item">
+                      <a class="page-link text-dark" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Следующая</a>
+                    </li>
+                      {% endif %}
+                  </ul>
+                </nav>
             </div>
         </div>
     </div>
-
 <br>
-{% endif %}
-
-{% if products %}
-
-{% endif %}
-
-<!--<div class="container">-->
-<!--  <div class="row">-->
-<!--    <div class="text-center col-sm"></div>-->
-<!--    <div class="text-center col-sm">-->
-<!--      <br><br>-->
-<!--      <div class="b-example-divider"></div>-->
-<!--        &lt;!&ndash; Кнопки для перехода между страницами &ndash;&gt;-->
-<!--        <div class="btn-group" role="group" aria-label="Second group">-->
-<!--        {% if page_obj.has_previous %}-->
-<!--            <a class="btn btn-outline-white border-0" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Предыдущая</a>-->
-<!--        {% endif %}-->
-<!--        <a class="btn btn-outline-white border-0" role="group" href="#">{{ page_obj.number }}</a>-->
-<!--        {% if page_obj.has_next %}-->
-<!--            <a class="btn btn-outline-white border-0" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Следующая</a>-->
-<!--        {% endif %}-->
-<!--        &lt;!&ndash; Конец для перехода между страницами &ndash;&gt;-->
-<!--        </div>-->
-<!--        <br><br>-->
-<!--    </div>-->
-<!--    <div class="text-center col-sm">-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-
-<!--<div class="b-example-divider"></div>-->
+<!--{% endif %}-->
 
 {% endblock body %}

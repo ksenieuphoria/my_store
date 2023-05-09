@@ -29,13 +29,16 @@
                 <th><h5>
                     {% with total_items=cart|length %}
                         {% if cart|length > 0 %}
-                        Items:
+                        Всего товаров в корзине:
                             {{ total_items }}
                         {% else %}
                             Your cart is empty.
                         {% endif %}
                     {% endwith %}
                 </h5></th>
+                <th>
+                    <h5>Итого: ${{ cart.get_total_price }}</h5>
+                </th>
                 <th><a style="float:right; margin:5px" class="btn btn-success" href="{% url 'orders:order_create' %}">Оформить заказ</a></th>
             </tr>
         </table>
@@ -53,21 +56,21 @@
               <div style="flex:1"><strong>Сумма</strong></div>
           </div>
 
-
           {% for item in cart %}
             {% with product=item.product %}
 <!--              <div class="cart-row">-->
-              <div class="row gy-5">
+              <div class="row gy-2">
                   <div style="flex:1"><img class="row-image" src="/images/{{ item.product.image }}"></div>
                   <div style="flex:2">{{ product.name }}</div>
                   <div style="flex:1">
                       <form method="POST" action="{% url 'cart:cart_add' product.id %}">
-							{% csrf_token %}
-							{{ item.update_quantity_form.quantity }}
-                            {{ item.update_quantity_form.update }}
-							<input type="submit" class="change" value="Изменить">
-<!--                          <button class="change" type="submit">Изменить</button>-->
-						</form>
+                          <div class="d-grid gap-3 d-md-flex justify-content-md-end">
+                          {% csrf_token %}
+						  {{ item.update_quantity_form.quantity }}
+                          {{ item.update_quantity_form.update }}
+						  <input type="submit" class="btn-sm" value="Изменить">
+                          </div>
+					  </form>
                   </div>
                   <div style="flex:1"><a class="btn btn-outline-danger " href="{% url 'cart:cart_remove' product.id%}">Удалить</a></div>
                   <div style="flex:1">${{ item.price|floatformat:2 }}</div>
@@ -77,13 +80,21 @@
             {% endwith %}
           {% endfor %}
 
+<!--            <div class="row">-->
+<!--                <div class="d-flex justify-content-end">-->
+<!--                  <br>-->
+<!--                  <th><h5>Итого: ${{ cart.get_total_price }}</h5></th>-->
+<!--                  <br>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="d-flex flex-row-reverse">-->
+<!--              <div class="p-2"></div>-->
+<!--              <div class="p-2"></div>-->
+<!--              <div class="p-2"><h5>Итого: ${{ cart.get_total_price }}</h5></div>-->
+<!--            </div>-->
 
 
-          <div class="total">
-              <br>
-              <th><h5>Итого: ${{ cart.get_total_price }}</h5></th>
-              <br>
-          </div>
 
         </div>
       </div>

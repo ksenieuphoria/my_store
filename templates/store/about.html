@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Store {% endblock %}
+
+<!-- Подключили CSS из папки static -->
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block body %}
+<div class="container">
+    <br><br>
+    <div class="text-center">
+    <h2>Бренд</h2>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row g-6 justify-content-center">
+
+            <div class="col-7">
+              <p class="lh-base">Компания <b><em>My Store</em></b> была основана в 2023 году как новый бренд испанской группы Inditex</p>
+              <p class="lh-base">Клиенты <b><em>My Store</em></b> – это молодые люди, которые любят приключения, отлично разбираются в новых
+                трендах, любят музыку, активно пользуются социальными сетями и новыми технологиями.</p>
+                <br>
+                <div class="row justify-content-center">
+                <img src="/images/store/store_view.jpg" width="600" class="text-center">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <br>
+
+{% endblock %}

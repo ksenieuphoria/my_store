@@ -17,29 +17,25 @@
 						</div>
 						</div>
 <!--				---------------------------------------------------------------------->
-					<div style="padding:50px" class="col-lg-5">
+					<div style="padding:50px" class="col-5">
 						<div class="col">
-						  <div class="align-self-stretch"><h3>{{product.name}}</h3></div>
+						  <div class="align-self-stretch"><h4>{{product.name}}</h4></div>
 						</div>
 						<hr>
-						<div class="col-lg-5 justify-content-start">
-						  <div class="p-2">
-							<!-- --- ВСТАВКА ФОРМЫ --- -->
-							<form method="POST" action="{% url 'cart:cart_add' product.id %}">
-							<div class="row mb-2">
-							{% csrf_token %}
-							<table>{{ cart_product_form }}</table>
-							<input type="submit" class="btn btn-outline-dark" value="В корзину">
-							</div>
-
-
-
-							</form>
-						  </div>
+						<div class="col">
+						  <div class="p-1"><h4>${{product.price}}</h4></div>
 						</div>
 						<div class="col">
-						  <div class="p-1"><h3>${{product.price}}</h3></div>
+							<!-- --- ВСТАВКА ФОРМЫ --- -->
+							<form method="POST" action="{% url 'cart:cart_add' product.id %}">
+								<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+								{% csrf_token %}
+								<table>{{ cart_product_form }}</table>
+								<input type="submit" class="btn btn-dark" value="В корзину">
+								</div>
+							</form>
 						</div>
+
 
 						</div>
 <!--				---------------------------------------------------------------------->

@@ -18,25 +18,60 @@ def main(request):
 def store(request):
     if request.method == 'GET':
         products = DataBase.read(Product, mode="all")
-        product = request.GET.get("")
+        paginator = Paginator(products, 8)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         form = CategoryForm()
         form_cart = CartAdd_Form()
-        context = {"products": products, "form": form, "form_cart": form_cart}
+        context = {"products": products, "form": form, "form_cart": form_cart, "page_obj": page_obj}
         return render(request, 'store/product/store.html', context=context)
     if request.method == 'POST':
         # Получение данных из формы
         category = request.POST.get("category")
         if category == "Показать всё":
             products = DataBase.read(Product, mode="all")
+            paginator = Paginator(products, 8)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
             form = CategoryForm()
-            context = {"products": products, "form": form}
+            form_cart = CartAdd_Form()
+            context = {"products": products, "form": form, "form_cart": form_cart, "page_obj": page_obj}
             return render(request, 'store/product/store.html', context=context)
         else:
             products = Product.objects.filter(category__name=category)
+            paginator = Paginator(products, 8)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
             print("$$$", products)
             form = CategoryForm()
-            context = {"products": products, "form": form}
+            form_cart = CartAdd_Form()
+            context = {"products": products, "form": form, "form_cart": form_cart, "page_obj": page_obj}
             return render(request, 'store/product/store.html', context=context)
+
+
+# # Метод маршрута "Список всех продуктов и их фильтрация по категориям"
+# # http://127.0.0.1:8000/store
+# def store(request):
+#     if request.method == 'GET':
+#         products = DataBase.read(Product, mode="all")
+#         form = CategoryForm()
+#         form_cart = CartAdd_Form()
+#         context = {"products": products, "form": form, "form_cart": form_cart}
+#         return render(request, 'store/product/store.html', context=context)
+#     if request.method == 'POST':
+#         # Получение данных из формы
+#         category = request.POST.get("category")
+#         if category == "Показать всё":
+#             products = DataBase.read(Product, mode="all")
+#             form = CategoryForm()
+#             context = {"products": products, "form": form}
+#             return render(request, 'store/product/store.html', context=context)
+#         else:
+#             products = Product.objects.filter(category__name=category)
+#             print("$$$", products)
+#             form = CategoryForm()
+#             context = {"products": products, "form": form}
+#             return render(request, 'store/product/store.html', context=context)
 
 
 # Метод маршрута "Продукт" /product/<int:product_id>
@@ -53,8 +88,9 @@ def product_detail(request, product_id):
         return render(request, "store/product/product.html", context=context)
 
 
-
-
+# Метод маршрута "О компании" /about
+def about(request):
+    return render(request, "store/about.html")
 
 
 # Класс содержащий ВНУТРЕННЮЮ работу с БД

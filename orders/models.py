@@ -28,10 +28,10 @@ class OrderInformation(models.Model):
 
 # Модель Заказ (то, что было в корзине) (второстепенная.таблица)
 class OrderItem(models.Model):
-    order = models.ForeignKey(OrderInformation, related_name='order', on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    quantity = models.PositiveIntegerField(default=1)
+    order = models.ForeignKey(OrderInformation, related_name='order', on_delete=models.CASCADE, verbose_name="Информация о заказе")
+    product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE, verbose_name="Продукт")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
+    quantity = models.PositiveIntegerField(default=1, verbose_name="Количество")
 
     class Meta:
         verbose_name = "Заказанный продукт"  # Название модели в единственном числе
