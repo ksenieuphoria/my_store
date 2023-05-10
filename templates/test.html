@@ -1,92 +1,24 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Store {% endblock %}
-
-<!-- Подключили CSS из папки static -->
-<link href="{% static 'css/main.css' %}" rel="stylesheet">
+{% block title %} Thank you! {% endblock %}
 
 {% block body %}
 
-
-{% if form %}
-<br>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3 justify-content-start">
-                    <!-- --- ВСТАВКА ФОРМЫ --- -->
-                    <form method="post" action="store">
-                    <!-- ЗАЩИТА ФОРМЫ    --> {% csrf_token %}
-                    <!-- ПОЛЯ ВВОДА      --> <table>{{ form }}</table>
-                    <!-- КНОПКА ОТПРАВКИ --> <input type="submit" class="btn btn-outline-dark" value="Выбрать">
-                    </form>
-                </div>
-            <div class="col-lg-9 justify-content-end">
-            <div class="row">
-                {% for product in products %}
-                    <div class="col-sm-3">
-                        <div class="align-self-stretch">
-                        <a href="/product/{{ product.id }}"><img class="thumbnail" src="/images/{{ product.image }}"></a>
-                            <div class = "box-element product" >
-                                <h6><strong>{{ product.name }}</strong></h6>
-                                <hr>
-                                <div class="row">
-                                <div class="col-6">
-                                <!-- --- ДОБАВИТЬ ПРОДУКТ В КОРЗИНУ С ГЛАВНОЙ СТРАНИЦЫ --- -->
-                                <!-- --- ВСТАВКА ФОРМЫ --- -->
-                                <form method="POST" action="{% url 'cart:cart_add' product.id %}">
-                                {% csrf_token %}
-                                {{ form_cart }}
-                                <input type="submit" class="btn btn-outline-dark" value="В корзину">
-                                </form>
-                                <!-- --- ВСТАВКА ФОРМЫ --- -->
-                                </div>
-                                <div class="col-6">
-                                <h4 style="display: inline-block; float: right">${{ product.price|floatformat:2 }}</h4>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-                </div>
+<div class="container">
+    <br><br>
+    <div class="row justify-content-center">
+        <br>
+        <br><br>
+        <h1>Спасибо!</h1>
+        <p>Ваш заказ был успешно оформлен. Ваш номер заказа <strong> {{ order.id }} </strong>.</p>
+        <br>
+        <div class="row col-lg-12">
+            <div class="col-4">
+                <a class="btn btn-outline-dark " href="{% url 'store:store' %}">&#x2190; Продолжить покупки</a>
             </div>
         </div>
     </div>
+</div>
 
-<br>
-{% endif %}
-
-{% if products %}
-
-{% endif %}
-
-<!--<div class="container">-->
-<!--  <div class="row">-->
-<!--    <div class="text-center col-sm"></div>-->
-<!--    <div class="text-center col-sm">-->
-<!--      <br><br>-->
-<!--      <div class="b-example-divider"></div>-->
-<!--        &lt;!&ndash; Кнопки для перехода между страницами &ndash;&gt;-->
-<!--        <div class="btn-group" role="group" aria-label="Second group">-->
-<!--        {% if page_obj.has_previous %}-->
-<!--            <a class="btn btn-outline-white border-0" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Предыдущая</a>-->
-<!--        {% endif %}-->
-<!--        <a class="btn btn-outline-white border-0" role="group" href="#">{{ page_obj.number }}</a>-->
-<!--        {% if page_obj.has_next %}-->
-<!--            <a class="btn btn-outline-white border-0" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Следующая</a>-->
-<!--        {% endif %}-->
-<!--        &lt;!&ndash; Конец для перехода между страницами &ndash;&gt;-->
-<!--        </div>-->
-<!--        <br><br>-->
-<!--    </div>-->
-<!--    <div class="text-center col-sm">-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-
-<!--<div class="b-example-divider"></div>-->
-
-{% endblock body %}
+{% endblock %}

@@ -20,22 +20,13 @@ from .forms import *
 # Добавление товаров в корзину:
 def cart_add(request, product_id):
     if request.method == 'POST':
-        if CartAddProductForm(request.POST):
-            cart = Cart(request)
-            product = get_object_or_404(Product, id=product_id)
-            form = CartAddProductForm(request.POST)
-            if form.is_valid():
-                data = form.cleaned_data
-                cart.add(product=product, quantity=data['quantity'], update_quantity=data['update'])
-            return redirect('cart:cart_detail')
-        if CartAdd_Form(request.POST):
-            cart = Cart(request)
-            product = get_object_or_404(Product, id=product_id)
-            form = CartAdd_Form(request.POST)
-            if form.is_valid():
-                data = form.cleaned_data
-                cart.add(product=product, quantity=data['quantity'], update_quantity=data['update'])
-            return redirect('cart:cart_detail')
+        cart = Cart(request)
+        product = get_object_or_404(Product, id=product_id)
+        form = CartAddProductForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            cart.add(product=product, quantity=data['quantity'], update_quantity=data['update'])
+        return redirect('cart:cart_detail')
 
 
 # Удаление товаров из корзины:

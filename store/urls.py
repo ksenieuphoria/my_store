@@ -13,5 +13,6 @@ urlpatterns = [
     path('store', views.store, name='store'),
     # Маршрут "О компании"
     path('about', views.about, name='about'),
+    path('test', views.test, name='test'),
 
 ]

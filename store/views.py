@@ -22,8 +22,7 @@ def store(request):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         form = CategoryForm()
-        form_cart = CartAdd_Form()
-        context = {"products": products, "form": form, "form_cart": form_cart, "page_obj": page_obj}
+        context = {"products": products, "form": form, "page_obj": page_obj}
         return render(request, 'store/product/store.html', context=context)
     if request.method == 'POST':
         # Получение данных из формы
@@ -34,8 +33,7 @@ def store(request):
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
             form = CategoryForm()
-            form_cart = CartAdd_Form()
-            context = {"products": products, "form": form, "form_cart": form_cart, "page_obj": page_obj}
+            context = {"products": products, "form": form, "page_obj": page_obj}
             return render(request, 'store/product/store.html', context=context)
         else:
             products = Product.objects.filter(category__name=category)
@@ -44,8 +42,7 @@ def store(request):
             page_obj = paginator.get_page(page_number)
             print("$$$", products)
             form = CategoryForm()
-            form_cart = CartAdd_Form()
-            context = {"products": products, "form": form, "form_cart": form_cart, "page_obj": page_obj}
+            context = {"products": products, "form": form, "page_obj": page_obj}
             return render(request, 'store/product/store.html', context=context)
 
 
@@ -91,6 +88,9 @@ def product_detail(request, product_id):
 # Метод маршрута "О компании" /about
 def about(request):
     return render(request, "store/about.html")
+
+def test(request):
+    return render(request, "test.html")
 
 
 # Класс содержащий ВНУТРЕННЮЮ работу с БД
