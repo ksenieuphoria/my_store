@@ -5,18 +5,6 @@ from .cart import Cart
 from .forms import *
 
 
-# # Добавление товаров в корзину:
-# def cart_add(request, product_id):
-#     if request.method == 'POST':
-#         cart = Cart(request)
-#         product = get_object_or_404(Product, id=product_id)
-#         form = CartAddProductForm(request.POST)
-#         if form.is_valid():
-#             data = form.cleaned_data
-#             cart.add(product=product, quantity=data['quantity'], update_quantity=data['update'])
-#         return redirect('cart:cart_detail')
-
-
 # Добавление товаров в корзину:
 def cart_add(request, product_id):
     if request.method == 'POST':
@@ -29,11 +17,11 @@ def cart_add(request, product_id):
         return redirect('cart:cart_detail')
 
 
-# Удаление товаров из корзины:
+# Обработчик кнопки "Удалить" (Удаление товаров из корзины):
 def cart_remove(request, product_id):
-    cart = Cart(request)
+    cart = Cart(request)  # Создаем объект класса Cart
     product = get_object_or_404(Product, id=product_id)
-    cart.remove(product)
+    cart.remove(product)  # Вызываем метод remove
     return redirect('cart:cart_detail')
 
 
@@ -41,6 +29,7 @@ def cart_remove(request, product_id):
 def cart_detail(request):
     cart = Cart(request)
     for item in cart:
+        # initial = Начальное значение для поля при показе формы
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
     context = {'cart': cart}
     return render(request, 'cart/detail.html', context=context)

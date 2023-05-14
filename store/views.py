@@ -46,31 +46,6 @@ def store(request):
             return render(request, 'store/product/store.html', context=context)
 
 
-# # Метод маршрута "Список всех продуктов и их фильтрация по категориям"
-# # http://127.0.0.1:8000/store
-# def store(request):
-#     if request.method == 'GET':
-#         products = DataBase.read(Product, mode="all")
-#         form = CategoryForm()
-#         form_cart = CartAdd_Form()
-#         context = {"products": products, "form": form, "form_cart": form_cart}
-#         return render(request, 'store/product/store.html', context=context)
-#     if request.method == 'POST':
-#         # Получение данных из формы
-#         category = request.POST.get("category")
-#         if category == "Показать всё":
-#             products = DataBase.read(Product, mode="all")
-#             form = CategoryForm()
-#             context = {"products": products, "form": form}
-#             return render(request, 'store/product/store.html', context=context)
-#         else:
-#             products = Product.objects.filter(category__name=category)
-#             print("$$$", products)
-#             form = CategoryForm()
-#             context = {"products": products, "form": form}
-#             return render(request, 'store/product/store.html', context=context)
-
-
 # Метод маршрута "Продукт" /product/<int:product_id>
 # http://127.0.0.1:8000/product/3
 def product_detail(request, product_id):

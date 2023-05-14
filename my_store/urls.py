@@ -8,7 +8,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     # Все маршруты приложения "Orders"
-    path('orders', include('orders.urls', namespace='orders')),
+    path('orders', include('orders.urls', namespace='orders')), # namespace - пространство имен
     # Все маршруты приложения "Cart"
     path('cart', include('cart.urls', namespace='cart')),
     # Все маршруты приложения "Store"

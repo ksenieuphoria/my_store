@@ -23,9 +23,8 @@ class Cart(object):
 
     # Метод __init__. Инициализация объекта корзины
     def __init__(self, request):
-        self.session = request.session  # Запрос к текущей сессии, записываем его в переменной класса session
-        cart = self.session.get(
-            settings.CART_SESSION_ID)  # Получаем через метод словаря dict.get() значение словаря по ключу
+        self.session = request.session  # Делаем запрос к текущей сессии, записываем его в переменной класса self.session(это словарь)
+        cart = self.session.get(settings.CART_SESSION_ID)  # Получаем через метод словаря dict.get() значение словаря по ключу и записываем в cart
         if not cart:  # Если значение ключа (то есть словарь) пустой, то:
             cart = self.session[settings.CART_SESSION_ID] = {}  # Сохраняем в сессии пустой словарь {"cart": {} }
         self.cart = cart  # Присваиваем переменной класса содержимое словаря cart. self.cart это СЛОВАРЬ!!!
@@ -77,8 +76,7 @@ class Cart(object):
         # Ключи словаря self.cart: (['4', '5', '9', '6'])
         print("Ключи словаря self.cart: ", product_ids)  # product_ids dict_keys(['4', '5', '9', '6'])
         # Получаем объекты модели Product и передаем их в корзину
-        products = Product.objects.filter(
-            id__in=product_ids)  # Оператор __in означает, что id равно одному из значений списка product_ids(входит В список)
+        products = Product.objects.filter(id__in=product_ids)  # Оператор __in означает, что id равно одному из значений списка product_ids(входит В список)
         # Products - это QuerySet! <QuerySet [<Product: Джинсовое мини-платье>, <Product: Укороченная джинсовая куртка>,
         print("QuerySet products: ", products)
         # Делаем копию словаря и записываем его в переменную cart

@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
 
-app_name = 'orders'
+app_name = 'orders'  # с помощью переменной app_name определено пространство имен приложения.
+# это позволяет организовать URL по приложениям и использовать имена, ссылаясь на них.
 
 urlpatterns = [
 
