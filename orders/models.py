@@ -3,6 +3,7 @@ from store.models import Product
 
 
 # Модель Покупатель (главная таблица) для сохранения информации о покупателе (адресе доставки)
+# и флаг paid, который по умолчанию равен False
 class OrderInformation(models.Model):
     name = models.CharField(max_length=20, help_text="Введите имя покупателя", verbose_name="Имя покупателя")
     email = models.EmailField(help_text="Введите e-mail", verbose_name="E-mail")
@@ -22,6 +23,7 @@ class OrderInformation(models.Model):
     def __str__(self):
         return 'Покупатель №{} Имя: {}'.format(self.id, self.name)
 
+    # Метод get_total_cost(), чтобы получить общую стоимость товаров в заказе
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
 
@@ -41,11 +43,6 @@ class OrderItem(models.Model):
     def __str__(self):
         return '{} {}'.format(self.id, self.product)
 
+    # Метод get_cost() для получения общей стоимости позиции в корзине
     def get_cost(self):
         return self.price * self.quantity
-
-
-"""
-Модель Order определяет поля для сохранения информации о  покупателе и флаг paid, который по умолчанию равен False. Это поле, чтобы определять, оплачен заказ или нет. Метод get_total_cost(), чтобы получить общую стоимость товаров в заказе. В этой модели есть метод get_cost() для получения общей стоимости позиции в корзине. 
-
-"""

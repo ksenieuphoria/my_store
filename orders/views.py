@@ -13,11 +13,6 @@ def order_create(request):
     if request.method == 'POST':
         form = OrderModelForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            address = form.cleaned_data['address']
-            city = form.cleaned_data['city']
-            data = {"name": name, "email": email, "address": address, "city": city}
             order = form.save()
             print("cart before order: ", cart)
             for item in cart:
